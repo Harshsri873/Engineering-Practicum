@@ -23,13 +23,11 @@
         <h2>Payment Details</h2>
         <p><strong>Total Amount:</strong> Rs <span id="total-price"></span></p>
 
-        <!-- Payment Option Buttons -->
         <div class="payment-options">
             <button class="pay-button" onclick="showQRCode()">Show QR Code</button>
             <button class="upi-button" onclick="payWithUPI()">Pay with UPI App</button>
         </div>
 
-        <!-- QR Code Display -->
         <div id="qrcode"></div>
     </div>
 
@@ -38,28 +36,25 @@
         const totalPrice = urlParams.get('totalPrice');
         document.getElementById('total-price').textContent = totalPrice;
 
-        // Generate QR code for UPI payment
         function showQRCode() {
             const qrcodeContainer = document.getElementById("qrcode");
-            qrcodeContainer.style.display = "flex";  // Show the QR code div
-
-            if (!qrcodeContainer.hasChildNodes()) {  // Generate QR code only once
-                const upiUrl = `upi://pay?pa=9341317998@yapl&pn=VendingMachine&am=${totalPrice}&cu=INR`; // Replace example@upi with actual UPI ID
-                new QRCode(qrcodeContainer, {
-                    text: upiUrl,
-                    width: 200,
-                    height: 200
-                });
+            qrcodeContainer.style.display = "flex";
+            if (!qrcodeContainer.hasChildNodes()) {
+                const upiUrl = `upi://pay?pa=9341317998@yapl&pn=VendingMachine&am=${totalPrice}&cu=INR`;
+                new QRCode(qrcodeContainer, { text: upiUrl, width: 200, height: 200 });
             }
+            setTimeout(() => {
+                window.location.href = `success.html?totalPrice=${totalPrice}`;
+            }, 5000);
         }
 
-        // Redirect for UPI payment link
         function payWithUPI() {
-            const upiUrl = `upi://pay?pa=example@upi&pn=VendingMachine&am=${totalPrice}&cu=INR`; // Replace example@upi with actual UPI ID
+            const upiUrl = `upi://pay?pa=9341317998@yapl&pn=VendingMachine&am=${totalPrice}&cu=INR`;
             window.location.href = upiUrl;
+            setTimeout(() => {
+                window.location.href = `success.html?totalPrice=${totalPrice}`;
+            }, 5000);
         }
     </script>
 </body>
 </html>
-
-
